@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro de Usuário | Saúde Municipal</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body class="auth-body">
+
+  <div class="auth-container">
+    <div class="auth-card">
+
+      <div class="brand-block">
+        <span class="badge">Sistema SUS</span>
+        <h1>Cadastrar usuário</h1>
+        <p>Crie um novo acesso para o sistema de saúde municipal</p>
+      </div>
+
+      <form id="register-form" class="form-grid">
+
+        <div class="form-group">
+          <label for="nome">Nome</label>
+          <input
+            type="text"
+            id="nome"
+            placeholder="Nome do usuário"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="admin@saude.com"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="senha">Senha</label>
+          <input
+            type="password"
+            id="senha"
+            placeholder="Digite uma senha"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="role">Perfil</label>
+          <select id="role" required>
+            <option value="">Selecione</option>
+            <option value="ADMIN">ADMIN</option>
+            <option value="GESTOR">GESTOR</option>
+            <option value="ATENDENTE">ATENDENTE</option>
+            <option value="MEDICO">MEDICO</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full">
+          Cadastrar
+        </button>
+
+        <div id="register-message" class="message-box hidden"></div>
+
+      </form>
+
+      <div style="margin-top:20px; font-size:13px; color:#6b7280; text-align:center;">
+        <p>Spring Boot 3 • JWT • MySQL</p>
+        <p><a href="./login.html" style="color:#2563eb;">Voltar para login</a></p>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="./js/api.js"></script>
+  <script>
+    const registerForm = document.getElementById("register-form");
+    const registerMessage = document.getElementById("register-message");
+
+    function showRegisterMessage(message, type = "error") {
+      registerMessage.classList.remove("hidden", "message-success", "message-error");
+      registerMessage.classList.add(type === "success" ? "message-success" : "message-error");
+      registerMessage.textContent = message;
+    }
+
+    registerForm?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const payload = {
+        nome: document.getElementById("nome").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        senha: document.getElementById("senha").value.trim(),
+        role: document.getElementById("role").value
+      };
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/auth/register`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw data;
+        }
+
+        showRegisterMessage("Usuário cadastrado com sucesso.", "success");
+        registerForm.reset();
+
+        setTimeout(() => {
+          window.location.href = "./login.html";
+        }, 1000);
+      } catch (error) {
+        let message = error?.message || "Erro ao cadastrar usuário.";
+
+        if (error?.details?.length) {
+          message = error.details.join(" | ");
+        }
+
+        showRegisterMessage(message, "error");
+      }
+    });
+  </script>
+</body>
+</html>

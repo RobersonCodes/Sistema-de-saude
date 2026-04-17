@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consultas | Saúde Municipal</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <span class="badge">Admin</span>
+        <h2>Saúde Municipal</h2>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="./dashboard.html">Dashboard</a>
+        <a href="./pacientes.html">Pacientes</a>
+        <a href="./consultas.html" class="active">Consultas</a>
+        <a href="./profissionais.html">Profissionais</a>
+        <a href="./unidades.html">Unidades</a>
+        <a href="./agenda.html">Agenda</a>
+      </nav>
+
+      <button id="logout-btn" class="btn btn-danger btn-full">Sair</button>
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <div>
+          <h1>Consultas</h1>
+          <p>Cadastro e listagem de consultas médicas</p>
+        </div>
+      </header>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Agendar consulta</h2>
+        </div>
+
+        <form id="consulta-form" class="form-grid two-columns">
+          <div class="form-group">
+            <label for="consulta-dataHora">Data e hora</label>
+            <input type="datetime-local" id="consulta-dataHora" required />
+          </div>
+
+          <div class="form-group">
+            <label for="consulta-observacoes">Observações</label>
+            <input type="text" id="consulta-observacoes" placeholder="Observações da consulta" />
+          </div>
+
+          <div class="form-group">
+            <label for="consulta-pacienteId">ID do paciente</label>
+            <input type="number" id="consulta-pacienteId" required />
+          </div>
+
+          <div class="form-group">
+            <label for="consulta-profissionalId">ID do profissional</label>
+            <input type="number" id="consulta-profissionalId" required />
+          </div>
+
+          <div class="form-group">
+            <label for="consulta-unidadeId">ID da unidade</label>
+            <input type="number" id="consulta-unidadeId" required />
+          </div>
+
+          <div class="form-actions-full">
+            <button type="submit" class="btn btn-primary">Agendar consulta</button>
+          </div>
+
+          <div id="consulta-message" class="message-box hidden form-message-full"></div>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Lista de consultas</h2>
+        </div>
+
+        <div id="consultas-table" class="table-wrapper">
+          <p>Carregando consultas...</p>
+        </div>
+
+        <div class="pagination-bar">
+          <button id="prev-page" class="btn">Anterior</button>
+          <span id="page-info">Página 1</span>
+          <button id="next-page" class="btn">Próxima</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="./js/api.js"></script>
+  <script src="./js/consultas.js"></script>
+</body>
+</html>

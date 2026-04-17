@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unidades | Saúde Municipal</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <span class="badge">Admin</span>
+        <h2>Saúde Municipal</h2>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="./dashboard.html">Dashboard</a>
+        <a href="./pacientes.html">Pacientes</a>
+        <a href="./consultas.html">Consultas</a>
+        <a href="./profissionais.html">Profissionais</a>
+        <a href="./unidades.html" class="active">Unidades</a>
+        <a href="./agenda.html">Agenda</a>
+      </nav>
+
+      <button id="logout-btn" class="btn btn-danger btn-full">Sair</button>
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <div>
+          <h1>Unidades de Saúde</h1>
+          <p>Cadastro e listagem de unidades</p>
+        </div>
+      </header>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Cadastrar unidade</h2>
+        </div>
+
+        <form id="unidade-form" class="form-grid two-columns">
+          <div class="form-group">
+            <label for="unidade-nome">Nome</label>
+            <input type="text" id="unidade-nome" required />
+          </div>
+
+          <div class="form-group">
+            <label for="unidade-tipo">Tipo</label>
+            <input type="text" id="unidade-tipo" required />
+          </div>
+
+          <div class="form-group">
+            <label for="unidade-bairro">Bairro</label>
+            <input type="text" id="unidade-bairro" required />
+          </div>
+
+          <div class="form-group">
+            <label for="unidade-endereco">Endereço</label>
+            <input type="text" id="unidade-endereco" required />
+          </div>
+
+          <div class="form-group">
+            <label for="unidade-telefone">Telefone</label>
+            <input type="text" id="unidade-telefone" />
+          </div>
+
+          <div class="form-actions-full">
+            <button type="submit" class="btn btn-primary">Cadastrar unidade</button>
+          </div>
+
+          <div id="unidade-message" class="message-box hidden form-message-full"></div>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Filtros</h2>
+        </div>
+
+        <form id="unidades-filter-form" class="filters-grid">
+          <input type="text" id="filtro-nome" placeholder="Nome" />
+          <input type="text" id="filtro-tipo" placeholder="Tipo" />
+          <input type="text" id="filtro-bairro" placeholder="Bairro" />
+
+          <select id="filtro-ativa">
+            <option value="">Status</option>
+            <option value="true">Ativa</option>
+            <option value="false">Inativa</option>
+          </select>
+
+          <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Lista de unidades</h2>
+        </div>
+
+        <div id="unidades-table" class="table-wrapper">
+          <p>Carregando unidades...</p>
+        </div>
+
+        <div class="pagination-bar">
+          <button id="prev-page" class="btn">Anterior</button>
+          <span id="page-info">Página 1</span>
+          <button id="next-page" class="btn">Próxima</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="./js/api.js"></script>
+  <script src="./js/unidades.js"></script>
+</body>
+</html>

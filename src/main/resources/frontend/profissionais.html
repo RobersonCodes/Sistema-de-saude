@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profissionais | Saúde Municipal</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <span class="badge">Admin</span>
+        <h2>Saúde Municipal</h2>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="./dashboard.html">Dashboard</a>
+        <a href="./pacientes.html">Pacientes</a>
+        <a href="./consultas.html">Consultas</a>
+        <a href="./profissionais.html" class="active">Profissionais</a>
+        <a href="./unidades.html">Unidades</a>
+        <a href="./agenda.html">Agenda</a>
+      </nav>
+
+      <button id="logout-btn" class="btn btn-danger btn-full">Sair</button>
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <div>
+          <h1>Profissionais</h1>
+          <p>Cadastro e listagem de profissionais de saúde</p>
+        </div>
+      </header>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Cadastrar profissional</h2>
+        </div>
+
+        <form id="profissional-form" class="form-grid two-columns">
+          <div class="form-group">
+            <label for="prof-nome">Nome</label>
+            <input type="text" id="prof-nome" required />
+          </div>
+
+          <div class="form-group">
+            <label for="prof-cargo">Cargo</label>
+            <input type="text" id="prof-cargo" required />
+          </div>
+
+          <div class="form-group">
+            <label for="prof-especialidade">Especialidade</label>
+            <input type="text" id="prof-especialidade" />
+          </div>
+
+          <div class="form-group">
+            <label for="prof-telefone">Telefone</label>
+            <input type="text" id="prof-telefone" />
+          </div>
+
+          <div class="form-group">
+            <label for="prof-unidadeId">ID da unidade</label>
+            <input type="number" id="prof-unidadeId" required />
+          </div>
+
+          <div class="form-actions-full">
+            <button type="submit" class="btn btn-primary">Cadastrar profissional</button>
+          </div>
+
+          <div id="profissional-message" class="message-box hidden form-message-full"></div>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Filtros</h2>
+        </div>
+
+        <form id="profissionais-filter-form" class="filters-grid">
+          <input type="text" id="filtro-nome" placeholder="Nome" />
+          <input type="text" id="filtro-cargo" placeholder="Cargo" />
+          <input type="text" id="filtro-especialidade" placeholder="Especialidade" />
+          <input type="number" id="filtro-unidadeId" placeholder="ID da unidade" />
+          <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Lista de profissionais</h2>
+        </div>
+
+        <div id="profissionais-table" class="table-wrapper">
+          <p>Carregando profissionais...</p>
+        </div>
+
+        <div class="pagination-bar">
+          <button id="prev-page" class="btn">Anterior</button>
+          <span id="page-info">Página 1</span>
+          <button id="next-page" class="btn">Próxima</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="./js/api.js"></script>
+  <script src="./js/profissionais.js"></script>
+</body>
+</html>

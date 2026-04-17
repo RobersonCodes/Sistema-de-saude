@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agenda | Saúde Municipal</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <span class="badge">Admin</span>
+        <h2>Saúde Municipal</h2>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="./dashboard.html">Dashboard</a>
+        <a href="./pacientes.html">Pacientes</a>
+        <a href="./consultas.html">Consultas</a>
+        <a href="./profissionais.html">Profissionais</a>
+        <a href="./unidades.html">Unidades</a>
+        <a href="./agenda.html" class="active">Agenda</a>
+      </nav>
+
+      <button id="logout-btn" class="btn btn-danger btn-full">Sair</button>
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <div>
+          <h1>Agenda</h1>
+          <p>Cadastro e consulta de horários médicos</p>
+        </div>
+      </header>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Cadastrar horário</h2>
+        </div>
+
+        <form id="agenda-form" class="form-grid two-columns">
+          <div class="form-group">
+            <label for="agenda-data">Data</label>
+            <input type="date" id="agenda-data" required />
+          </div>
+
+          <div class="form-group">
+            <label for="agenda-horaInicio">Hora de início</label>
+            <input type="time" id="agenda-horaInicio" required />
+          </div>
+
+          <div class="form-group">
+            <label for="agenda-profissionalId">ID do profissional</label>
+            <input type="number" id="agenda-profissionalId" required />
+          </div>
+
+          <div class="form-group">
+            <label for="agenda-unidadeId">ID da unidade</label>
+            <input type="number" id="agenda-unidadeId" required />
+          </div>
+
+          <div class="form-actions-full">
+            <button type="submit" class="btn btn-primary">Cadastrar horário</button>
+          </div>
+
+          <div id="agenda-message" class="message-box hidden form-message-full"></div>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Consultar agenda por profissional</h2>
+        </div>
+
+        <form id="agenda-busca-form" class="filters-grid">
+          <input type="number" id="busca-profissionalId" placeholder="ID do profissional" required />
+          <input type="date" id="busca-data" required />
+          <button type="submit" class="btn btn-primary">Buscar agenda</button>
+        </form>
+
+        <div id="agenda-table" class="table-wrapper margin-top">
+          <p>Informe os dados para consultar a agenda.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="./js/api.js"></script>
+  <script src="./js/agenda.js"></script>
+</body>
+</html>

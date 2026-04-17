@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | Saúde Municipal</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <span class="badge">Admin</span>
+        <h2>Saúde Municipal</h2>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="./dashboard.html" class="active">Dashboard</a>
+        <a href="./pacientes.html">Pacientes</a>
+        <a href="./consultas.html">Consultas</a>
+        <a href="./profissionais.html">Profissionais</a>
+        <a href="./unidades.html">Unidades</a>
+        <a href="./agenda.html">Agenda</a>
+      </nav>
+
+      <button id="logout-btn" class="btn btn-danger btn-full">Sair</button>
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <div>
+          <h1>Dashboard</h1>
+          <p>Visão geral do sistema</p>
+        </div>
+
+        <div class="user-box">
+          <strong id="user-name">Carregando...</strong>
+          <span id="user-role">...</span>
+        </div>
+      </header>
+
+      <section class="cards-grid">
+        <article class="info-card">
+          <span class="card-label">Usuário autenticado</span>
+          <strong id="card-user-email">-</strong>
+        </article>
+
+        <article class="info-card">
+          <span class="card-label">Perfil</span>
+          <strong id="card-user-role">-</strong>
+        </article>
+
+        <article class="info-card">
+          <span class="card-label">Pacientes cadastrados</span>
+          <strong id="card-pacientes-total">-</strong>
+        </article>
+
+        <article class="info-card">
+          <span class="card-label">Consultas cadastradas</span>
+          <strong id="card-consultas-total">-</strong>
+        </article>
+      </section>
+
+      <section class="panel-grid">
+        <article class="panel">
+          <div class="panel-header">
+            <h2>Últimos pacientes</h2>
+          </div>
+
+          <div id="dashboard-pacientes" class="table-wrapper">
+            <p>Carregando pacientes...</p>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <h2>Últimas consultas</h2>
+          </div>
+
+          <div id="dashboard-consultas" class="table-wrapper">
+            <p>Carregando consultas...</p>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="./js/api.js"></script>
+  <script src="./js/dashboard.js"></script>
+</body>
+</html>

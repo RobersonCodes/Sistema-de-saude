@@ -1,0 +1,11 @@
+package com.saude.saomunicipal.entity;
+
+public enum StatusConsulta {
+    AGENDADA,
+    CONFIRMADA,
+    EM_ATENDIMENTO,
+    REALIZADA,
+    CANCELADA,
+    REMARCADA,
+    FALTOU
+}

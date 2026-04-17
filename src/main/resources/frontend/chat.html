@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat IA | Saúde Municipal</title>
+
+  <link rel="stylesheet" href="./css/style.css">
+
+  <style>
+
+    .chat-layout{
+      height:100vh;
+      display:flex;
+      flex-direction:column;
+      background:#f1f5f9;
+    }
+
+    .chat-header{
+      background:#0f172a;
+      color:white;
+      padding:16px 24px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .chat-container{
+      flex:1;
+      overflow-y:auto;
+      padding:24px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .message{
+      max-width:70%;
+      padding:12px 14px;
+      border-radius:14px;
+      font-size:14px;
+      line-height:1.4;
+      box-shadow:0 3px 10px rgba(0,0,0,0.05);
+    }
+
+    .message.user{
+      align-self:flex-end;
+      background:#2563eb;
+      color:white;
+    }
+
+    .message.bot{
+      align-self:flex-start;
+      background:white;
+      border:1px solid #e5e7eb;
+    }
+
+    .chat-input{
+      display:flex;
+      gap:10px;
+      padding:16px;
+      background:white;
+      border-top:1px solid #e5e7eb;
+    }
+
+    .chat-input input{
+      flex:1;
+      padding:12px;
+      border-radius:10px;
+      border:1px solid #d1d5db;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<div class="chat-layout">
+
+  <header class="chat-header">
+
+    <div>
+
+      <strong>Assistente de Saúde</strong>
+
+      <div style="font-size:12px;opacity:0.7;">
+        IA integrada ao SUS municipal
+      </div>
+
+    </div>
+
+    <button id="logout-btn" class="btn btn-danger">
+      Sair
+    </button>
+
+  </header>
+
+
+  <div id="chat-box" class="chat-container">
+
+    <div class="message bot">
+      Olá 👋<br><br>
+      Posso ajudar você a:
+      <br><br>
+      • agendar consulta
+      <br>
+      • consultar horário médico
+      <br>
+      • encontrar unidade de saúde
+      <br>
+      • verificar consulta pelo CPF
+    </div>
+
+  </div>
+
+
+  <div class="chat-input">
+
+    <input
+      type="text"
+      id="chat-input"
+      placeholder="Digite sua mensagem..."
+    >
+
+    <button
+      id="send-btn"
+      class="btn btn-primary"
+    >
+      Enviar
+    </button>
+
+  </div>
+
+</div>
+
+
+<script src="./js/api.js"></script>
+<script src="./js/chat.js"></script>
+
+</body>
+
+</html>
