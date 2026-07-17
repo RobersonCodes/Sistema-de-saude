@@ -25,8 +25,9 @@ public class Usuario {
     @Column(nullable = false)
     private String senha;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
-    private String role;
+    private UsuarioRole role;
 
     @Builder.Default
     @Column(nullable = false)

@@ -59,7 +59,7 @@ async function loadDashboard() {
         (consultas.content || []).map((item) => [
           item.id,
           item.dataHora,
-          `<span class="status-pill">${item.status}</span>`,
+          item.status,
           item.pacienteId,
           item.profissionalId,
           item.unidadeId

@@ -11,7 +11,7 @@ function addMessage(text, type = "bot") {
 
   div.classList.add("message", type);
 
-  div.innerHTML = text;
+  div.textContent = text;
 
   chatBox.appendChild(div);
 

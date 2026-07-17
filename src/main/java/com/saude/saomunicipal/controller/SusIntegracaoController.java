@@ -4,6 +4,7 @@ import com.saude.saomunicipal.integration.sus.dto.SusIntegrationResponseDTO;
 import com.saude.saomunicipal.integration.sus.service.SusIntegrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,6 +15,7 @@ public class SusIntegracaoController {
     private final SusIntegrationService service;
 
     @PostMapping("/consultas/{consultaId}/esus-aps")
+    @PreAuthorize("hasAnyRole('ADMIN','GESTOR')")
     public ResponseEntity<SusIntegrationResponseDTO> enviarConsultaEsusAps(
             @PathVariable Long consultaId
     ) {

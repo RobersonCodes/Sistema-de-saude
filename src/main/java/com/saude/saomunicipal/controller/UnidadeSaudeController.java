@@ -5,16 +5,18 @@ import com.saude.saomunicipal.dto.UnidadeFiltroDTO;
 import com.saude.saomunicipal.dto.UnidadeSaudeRequestDTO;
 import com.saude.saomunicipal.dto.UnidadeSaudeResponseDTO;
 import com.saude.saomunicipal.service.UnidadeSaudeService;
+import com.saude.saomunicipal.util.PageableUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/unidades")
@@ -22,9 +24,14 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Unidades", description = "Gerenciamento de unidades de saúde")
 public class UnidadeSaudeController {
 
+    private static final Set<String> CAMPOS_ORDENACAO_PERMITIDOS = Set.of(
+            "id", "nome", "tipo", "bairro", "ativa"
+    );
+
     private final UnidadeSaudeService unidadeService;
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN','GESTOR')")
     @Operation(summary = "Cadastrar nova unidade")
     public ResponseEntity<UnidadeSaudeResponseDTO> cadastrar(
             @RequestBody @Valid UnidadeSaudeRequestDTO dto
@@ -52,11 +59,7 @@ public class UnidadeSaudeController {
                 ativa
         );
 
-        Sort sort = direction.equalsIgnoreCase("desc")
-                ? Sort.by(sortBy).descending()
-                : Sort.by(sortBy).ascending();
-
-        Pageable pageable = PageRequest.of(page, size, sort);
+        Pageable pageable = PageableUtils.build(page, size, sortBy, direction, CAMPOS_ORDENACAO_PERMITIDOS);
 
         return ResponseEntity.ok(unidadeService.listar(filtro, pageable));
     }

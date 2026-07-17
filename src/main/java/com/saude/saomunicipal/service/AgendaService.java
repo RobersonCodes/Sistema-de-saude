@@ -32,6 +32,16 @@ public class AgendaService {
         UnidadeSaude unidade = unidadeRepository.findById(dto.unidadeId())
                 .orElseThrow(() -> new BusinessException("Unidade não encontrada."));
 
+        boolean jaExiste = agendaProfissionalRepository.existsByProfissionalIdAndDataAndHoraInicio(
+                dto.profissionalId(),
+                dto.data(),
+                dto.horaInicio()
+        );
+
+        if (jaExiste) {
+            throw new BusinessException("Já existe um horário cadastrado para este profissional nesta data/hora.");
+        }
+
         AgendaProfissional agenda = AgendaProfissional.builder()
                 .data(dto.data())
                 .horaInicio(dto.horaInicio())

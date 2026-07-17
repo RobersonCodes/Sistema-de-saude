@@ -28,7 +28,7 @@ async function loadConsultas(page = 0) {
       content.map((item) => [
         item.id,
         item.dataHora,
-        `<span class="status-pill">${item.status}</span>`,
+        item.status,
         item.observacoes,
         item.pacienteId,
         item.profissionalId,

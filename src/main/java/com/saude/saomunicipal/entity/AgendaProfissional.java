@@ -7,7 +7,13 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "agenda_profissional")
+@Table(
+        name = "agenda_profissional",
+        uniqueConstraints = @UniqueConstraint(
+                name = "uk_agenda_profissional_horario",
+                columnNames = {"profissional_id", "data", "hora_inicio"}
+        )
+)
 @Getter
 @Setter
 @NoArgsConstructor

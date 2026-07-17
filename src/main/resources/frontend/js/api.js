@@ -1,4 +1,10 @@
-const API_BASE_URL = "http://localhost:8080/api/v1";
+// Para apontar o frontend para um backend em outro host/porta, defina
+// `window.API_CONFIG = { baseUrl: "https://meu-backend:8080/api/v1" };`
+// em uma tag <script> antes de carregar este arquivo. Sem essa configuração,
+// assume-se que o backend roda na porta 8080 do mesmo host acessado no navegador.
+const API_BASE_URL =
+  (window.API_CONFIG && window.API_CONFIG.baseUrl) ||
+  `${window.location.protocol}//${window.location.hostname}:8080/api/v1`;
 
 function getToken() {
   return localStorage.getItem("token");
@@ -63,6 +69,15 @@ function bindLogoutButton() {
   }
 }
 
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function renderTable(headers, rows) {
   if (!rows || !rows.length) {
     return `<p>Nenhum registro encontrado.</p>`;
@@ -72,7 +87,7 @@ function renderTable(headers, rows) {
     <table>
       <thead>
         <tr>
-          ${headers.map((header) => `<th>${header}</th>`).join("")}
+          ${headers.map((header) => `<th>${escapeHtml(header)}</th>`).join("")}
         </tr>
       </thead>
       <tbody>
@@ -80,7 +95,7 @@ function renderTable(headers, rows) {
           .map(
             (row) => `
               <tr>
-                ${row.map((cell) => `<td>${cell ?? "-"}</td>`).join("")}
+                ${row.map((cell) => `<td>${cell === null || cell === undefined ? "-" : escapeHtml(cell)}</td>`).join("")}
               </tr>
             `
           )

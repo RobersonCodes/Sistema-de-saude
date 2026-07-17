@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -24,6 +25,7 @@ public class AgendaController {
     private final AgendaService agendaService;
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN','GESTOR','MEDICO')")
     @Operation(summary = "Cadastrar horário na agenda do profissional")
     public ResponseEntity<AgendaResponseDTO> cadastrar(@RequestBody @Valid AgendaRequestDTO dto) {
         AgendaResponseDTO response = agendaService.cadastrar(dto);

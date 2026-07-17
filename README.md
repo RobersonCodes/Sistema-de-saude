@@ -122,15 +122,23 @@ integration/sus
 - cancelamento
 - histórico de atendimento
 
-status disponíveis:
+Agendar, remarcar ou cancelar uma consulta reserva/libera atomicamente o
+horário correspondente na agenda do profissional (lock pessimista a nível de
+banco): só é possível marcar uma consulta em um horário que já foi publicado
+na agenda e que ainda esteja disponível, o que é o mecanismo que efetivamente
+impede duas pessoas de ocuparem o mesmo horário — o problema que este projeto
+existe para resolver.
 
-AGENDADA  
-CONFIRMADA  
-EM_ATENDIMENTO  
-REALIZADA  
-CANCELADA  
-FALTOU  
-REMARCADA  
+status disponíveis e transições permitidas:
+
+AGENDADA → CONFIRMADA, CANCELADA, FALTOU
+CONFIRMADA → EM_ATENDIMENTO, CANCELADA, FALTOU
+EM_ATENDIMENTO → REALIZADA, CANCELADA
+REMARCADA → CONFIRMADA, CANCELADA, FALTOU
+REALIZADA, CANCELADA, FALTOU → estados finais
+
+REMARCADA só é atingido pelo endpoint dedicado de remarcação (que exige uma
+nova data/hora); não é um destino válido de PATCH /consultas/{id}/status.
 
 ---
 
@@ -191,12 +199,43 @@ criptografia de senha
 controle de roles
 proteção de endpoints
 tratamento global de exceções
+Perfis de acesso (RBAC)
+
+O primeiro usuário cadastrado no sistema vira automaticamente ADMIN
+(bootstrap); todo auto-cadastro seguinte entra como ATENDENTE. Perfis com
+mais privilégio (GESTOR, MEDICO, ou outro ADMIN) só podem ser atribuídos por
+um ADMIN já autenticado, via POST /api/v1/auth/usuarios ou
+PATCH /api/v1/auth/usuarios/{id}/role — o cliente nunca escolhe o próprio
+perfil no auto-cadastro.
+
+| Perfil     | Pode |
+|------------|------|
+| ADMIN      | Tudo, incluindo criar usuários e alterar perfis |
+| GESTOR     | Unidades, profissionais, pacientes, consultas, agenda |
+| ATENDENTE  | Pacientes e consultas (agendar, remarcar, cancelar, status) |
+| MEDICO     | Agenda própria e consultas (status, remarcação, cancelamento) |
+
+Os endpoints de chat/IA (`/api/v1/chat`, `/api/v1/chatbot`, `/api/v1/ia`)
+são públicos de propósito — são o canal de autoatendimento do cidadão, que
+não tem conta no sistema.
+
+Variáveis de ambiente (produção)
+
+| Variável | Obrigatória | Descrição |
+|----------|-------------|-----------|
+| `JWT_SECRET` | Sim | Chave de assinatura do JWT (≥256 bits). O valor em `application.properties` é só um fallback de dev. |
+| `DB_URL`, `DB_USERNAME`, `DB_PASSWORD` | Sim | Conexão com o MySQL. |
+| `OPENAI_API_KEY` | Para os recursos de IA | Sem ela, `/api/v1/ia/**` e `/api/v1/chat/**` respondem com uma mensagem de indisponibilidade em vez de derrubar a aplicação. |
+| `OPENAI_MODEL` | Não | Default `gpt-4o-mini`. |
+
 Endpoints principais
 Auth
 
-POST /api/v1/auth/register
+POST /api/v1/auth/register (auto-cadastro; perfil nunca é escolhido pelo cliente)
 POST /api/v1/auth/login
 GET /api/v1/auth/me
+POST /api/v1/auth/usuarios (ADMIN — cria usuário com perfil explícito)
+PATCH /api/v1/auth/usuarios/{id}/role (ADMIN — altera o perfil de um usuário)
 
 Pacientes
 
@@ -225,6 +264,17 @@ PATCH /api/v1/consultas/{id}/cancelamento
 Integração SUS (mock)
 
 POST /api/v1/integracoes/sus/consultas/{id}/esus-aps
+
+Testes
+
+Suíte de testes de integração (JUnit + Spring Boot Test) rodando contra H2
+em memória — não precisa de MySQL nem de OPENAI_API_KEY real:
+
+.\mvnw.cmd test
+
+Cobre autenticação/bootstrap de perfil, publicação de agenda, agendamento,
+bloqueio de duplo agendamento, cancelamento/liberação de horário, remarcação
+e a máquina de estados da consulta.
 
 Como executar o projeto
 

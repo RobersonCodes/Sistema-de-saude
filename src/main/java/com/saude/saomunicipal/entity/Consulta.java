@@ -112,4 +112,10 @@ public class Consulta {
     )
     private UnidadeSaude unidade;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "agenda_id"
+    )
+    private AgendaProfissional agenda;
+
 }
