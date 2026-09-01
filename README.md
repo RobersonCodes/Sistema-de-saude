@@ -161,6 +161,7 @@ Saída estruturada:
   "data": "2026-04-20",
   "periodo": "MANHA"
 }
+```
 
 Permite:
 
@@ -333,12 +334,3 @@ Licença
 
 Projeto desenvolvido para fins educacionais e demonstração de portfólio.
 
-
----
-
-## Como subir README
-
-```powershell
-git add README.md
-git commit -m "docs: adiciona README profissional"
-git push
